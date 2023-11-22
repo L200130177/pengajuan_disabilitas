@@ -9,8 +9,8 @@ class Laporan extends MY_Controller {
     function __construct()
     {
         parent::__construct();
-        check_not_validate();
-        check_not_login();
+        // check_not_validate();
+        // check_not_login();
         $this->load->model(['Maintenance_m','laporan/Laporan_m']);
         $name = $this->session->userdata('name');
         $this->db->set('activity', date("Y-m-d H:i:s"));

@@ -107,7 +107,7 @@
                         <a href="<?=site_url('dashboard');?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
 					</li>
 
-                    <li <?=$this->uri->segment(1) == 'manage' || $this->uri->segment(1) == '' ? 'class="active"' : ''?>>
+                    <!-- <li <?=$this->uri->segment(1) == 'manage' || $this->uri->segment(1) == '' ? 'class="active"' : ''?>>
                         <a href="<?=site_url('manage');?>"><i class="fa fa-pencil"></i> <span>Manage</span></a>
 					</li>
 
@@ -135,7 +135,7 @@
 								<a href="<?=site_url('laporan');?>?jenis=mampu"><i class="fa fa-book"></i> Laporan Mampu</a>
 							</li>
 						</ul>
-					</li>
+					</li> -->
 
 					<?php if($this->session->userdata('level') == 1){ ?>
                     <li class="header">SETTINGS</li>
@@ -143,9 +143,9 @@
                     <li <?=$this->uri->segment(1) == 'user' || $this->uri->segment(1) == '' ? 'class="active"' : ''?>>
                         <a href="<?=site_url('user');?>"><i class="fa fa-users"></i> <span>Users</span></a>
 					</li>
-					<li <?=$this->uri->segment(1) == 'cloud_storrage' || $this->uri->segment(1) == '' ? 'class="active"' : ''?>>
+					<!-- <li <?=$this->uri->segment(1) == 'cloud_storrage' || $this->uri->segment(1) == '' ? 'class="active"' : ''?>>
                         <a href="<?=site_url('cloud_storrage');?>"><i class="fa fa-users"></i> <span>Minio</span></a>
-					</li>
+					</li> -->
 					<?php } ?>
 				</ul>
 			</section>

@@ -98,7 +98,7 @@
 </br>
             <h2>Aplikasi rekomendasi KIS-PBI untuk PMK Desa.</h2>
             <div class="text-center text-lg-start">
-              <a href="<?php echo base_url('validasi'); ?>" class="btn-get-started scrollto">validasi</a>
+              <a href="<?php echo base_url('auth'); ?>" class="btn-get-started scrollto">admin dashboard</a>
             </div>
           </div>
         </div>

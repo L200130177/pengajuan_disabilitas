@@ -6,8 +6,8 @@ class Dashboard extends MY_Controller {
     function __construct()
     {
         parent::__construct();
-        check_not_validate();
-        check_not_login();
+        // check_not_validate();
+        // check_not_login();
         $this->load->model(['Maintenance_m']);
         $name = $this->session->userdata('name');
         $this->db->set('activity', date("Y-m-d H:i:s"));
@@ -48,7 +48,16 @@ class Dashboard extends MY_Controller {
         }
     }
 
-    public function cek_nik_ppks()
+    public function submit_pengajuan()
     {
+        $post = $this->input->post(null, TRUE);
+        $insert = $this->db->insert('pengajuan_disabilitas',$post);
+        if($this->db->affected_rows()>0){
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-check"></i>Data berhasil ditambahkan</div>');
+            redirect('pengajuan');
+        }else{
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-ban"></i>NIK sudah terdaftar</div>');
+            redirect('pengajuan');
+        }
     }
 }

@@ -6,8 +6,8 @@ class User extends MY_Controller {
     function __construct()
     {
         parent::__construct();
-        check_not_validate();
-        check_not_login();
+        // check_not_validate();
+        // check_not_login();
         $this->load->model(['Maintenance_m', 'user/User_m']);
         $this->load->library('session');
         $name = $this->session->userdata('name');
