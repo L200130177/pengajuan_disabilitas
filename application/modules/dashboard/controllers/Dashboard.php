@@ -8,7 +8,7 @@ class Dashboard extends MY_Controller {
         parent::__construct();
         // check_not_validate();
         // check_not_login();
-        $this->load->model(['Maintenance_m']);
+        $this->load->model(['Maintenance_m', 'dashboard/Dashboard_m']);
         $name = $this->session->userdata('name');
         $this->db->set('activity', date("Y-m-d H:i:s"));
         $this->db->where('name', $name);
@@ -17,7 +17,10 @@ class Dashboard extends MY_Controller {
 
 	public function index()
 	{
-        $this->load->model('Maintenance_m');
+        // $data_dummy = $this->Dashboard_m->get()->result();
+        // $minio_date = date( "F-Y", strtotime($data_dummy[0]->created_at));
+        // var_dump($minio_date);
+        // die();
         $maintenance = $this->Maintenance_m->maintenance();
         if($maintenance != true){
             $data = [
@@ -32,23 +35,44 @@ class Dashboard extends MY_Controller {
         }
 	}
 
-    public function cek_nik_pbi()
+    public function list_data() 
     {
-        $get_nik_laporan = $this->db->get_where('laporan', array('nik' => $this->input->post('nik_pbi')))->row_array();
-        $get_nik_apbn = $this->db->get_where('apbn', array('nik' => $this->input->post('nik_pbi')))->row_array();
-        if(isset($get_nik_apbn['nik']) != $this->input->post('nik_pbi')){
-            if(isset($get_nik_laporan['nik']) != $this->input->post('nik_pbi')){
-                $nik ['cek_nik'] = $this->input->post('nik_pbi');
-                $this->session->set_userdata($nik);
-                redirect('kuesioner');
-            }
-        }else{
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-ban"></i>NIK ANDA SUDAH DIUSULKAN DI DINAS SOSIAL</div>');
-            redirect('dashboard');
+        $list = $this->Dashboard_m->get_datatables();
+        $data = array();
+        $no = @$_POST['start'];
+        foreach ($list as $usr) {
+            $no++;
+            $nik = base64_encode($this->encryption->encrypt($usr->nik));
+            $ref_file = "http://103.169.233.45:9000/dinsos/". date( "F-Y", strtotime($usr->created_at)) . "/" . $usr->nama . "_" . $usr->nik . "/";
+            $row = array();
+            $row[] = $no.".";
+            $row[] = $usr->nama;
+            $row[] = $usr->nik;
+            $row[] = '<img src="'.$ref_file.$usr->ref_file.'" class="user-image" alt="User Image" style="width: 200px;height:100px;">';
+            $row[] = '<a href="'.$ref_file.$usr->ref_file.'" target="_blank" class="btn btn-success btn-xs">Download Dokumen</a>';
+            // $row[] = $usr->level  == 1 ? "Admin" : "User";  
+            // $row[] = '<button type="button" title="edit user" class="btn btn-primary btn-xs" onclick="byid(' . "'" . $id . "', 'edit'" . ')">
+            //             <i class="fa fa-pencil"></i> Update
+            //             </button>
+            //             <button type="button" title="delete user" class="btn btn-danger btn-xs" onclick="byid(' . "'" . $id . "', 'delete'" . ')">
+            //             <i class="fa fa-trash"></i>  Delete
+            //             </button>
+            //             <button type="button" title="reset session" class="btn btn-warning btn-xs" onclick="byid(' . "'" . $id . "', 'session'" . ')">
+            //             <i class="fa fa-trash"></i>  Session
+            //             </button>';
+            $data[] = $row;
         }
+        $output = array(
+                    "draw" => @$_POST['draw'],
+                    "recordsTotal" => $this->Dashboard_m->count_all(),
+                    "recordsFiltered" => $this->Dashboard_m->count_filtered(),
+                    "data" => $data,
+                );
+        // output to json format
+        echo json_encode($output);
     }
 
-    public function submit_pengajuan()
+    public function submit_rekomendasi()
     {
         $post = $this->input->post(null, TRUE);
         $insert = $this->db->insert('pengajuan_disabilitas',$post);

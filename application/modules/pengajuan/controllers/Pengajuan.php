@@ -11,7 +11,12 @@ class Pengajuan extends MY_Controller {
 
 	public function index()
 	{
-        $this->load->view('pengajuan');
+        $maintenance = $this->Maintenance_m->maintenance();
+        if($maintenance != true){
+            $this->load->view('pengajuan');
+        }else{
+            $this->load->view('maintenance');
+        }
 	}
 
     public function submit()
@@ -51,6 +56,7 @@ class Pengajuan extends MY_Controller {
             'hubungan_ppks' 	        => htmlentities($this->input->post('hubungan_ppks')),
             'jenis_layanan' 	        => htmlentities($this->input->post('jenis_layanan')),
             'ref_file' 	                => $data_minio['file_name1'],
+            'is_rekomendasi' 	        => 0,
             );
         
         $check_nik = $this->db->get_where('pengajuan_disabilitas', array('nik' => $this->input->post('nik')))->row_array();
@@ -102,54 +108,6 @@ class Pengajuan extends MY_Controller {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-ban"></i>NIK sudah terdaftar</div>');
             redirect('pengajuan');
         }
-    }
-
-    public function upload_minio()
-    {
-        $s3client = new Aws\S3\S3Client([
-            'region' => 'us-west-2', 
-            'version' => 'latest',
-            'endpoint' => getenv('MINIO_ENDPOINT'),
-            'useSSL' => false,
-            'use_path_style_endpoint' => true,
-            'credentials' => [
-                'key'    => getenv('MINIO_ACCESS_KEY'),
-                'secret' => getenv('MINIO_SECRET_KEY'),
-        ],
-        ]);
-
-        $bucket_name = getenv('MINIO_BUCKET');
-        $data = array(
-            'inputor' 	=> uniqid() . "_" . htmlentities($this->input->post('nama')),
-            'date' 	=> date("F-Y"),
-            'file_name1'    => uniqid() . "_" . $_FILES['ref_file1']['name'],
-            'file_name2'    => uniqid() . "_" . $_FILES['ref_file2']['name'],
-            'file_tmp1'   => $_FILES['ref_file1']['tmp_name'],
-            'file_tmp2'   => $_FILES['ref_file2']['tmp_name'],
-        );
-            try {
-                $s3client->putObject([
-                    'Bucket' => $bucket_name,
-                    'Key' => $data['date'] . "/" . $data['inputor'] . "/" . $data['file_name1'],
-                    'SourceFile' => $data['file_tmp1']
-                ]);
-                echo "Uploaded to $bucket_name.\n";
-            } catch (Exception $exception) {
-                echo "Failed to upload with error: " . $exception->getMessage();
-                exit("Please fix error with file upload before continuing.");
-            }
-    
-            try {
-                $s3client->putObject([
-                    'Bucket' => $bucket_name,
-                    'Key' => $data['date'] . "/" . $data['inputor'] . "/" . $data['file_name2'],
-                    'SourceFile' => $data['file_tmp2']
-                ]);
-                echo "Uploaded to $bucket_name.\n";
-            } catch (Exception $exception) {
-                echo "Failed to upload with error: " . $exception->getMessage();
-                exit("Please fix error with file upload before continuing.");
-            }
     }
 
 }

@@ -58,6 +58,7 @@ input[type=number] {
 						Pengajuan Bantuan
 						<small>Dinas Sosial</small>
 					</h1>
+					<?= $this->session->flashdata('message');?>
 				</section>
 
 				<!-- Main content -->

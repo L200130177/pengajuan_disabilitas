@@ -1,134 +1,137 @@
+<link rel="stylesheet" href="<?=base_url();?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" href="<?php echo base_url();?>assets/backend/css/plugin/screen.css">
-<style>
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-	-moz-appearance: textfield;
-}
-</style>
 <?= $this->session->flashdata('message');?>
 <div class="box">
 	<div class="box-header">
-		<!-- <h3 class="boc-title">Cek NIK</h3> -->
+		<div class="pull-right">
+			<button class="btn btn-primary btn-flat" data-toggle="modal" data-target="#createModal">
+				<i class="fa fa-user-plus"></i> Create
+			</button>
+		</div>	
 	</div>
+	<!-- /.box-header -->
 	<div class="box-body">
-		<div class="row">
-			<div class="col-lg-3 col-xs-6">
-				<!-- small box -->
-				<div class="small-box bg-green">
-					<div class="inner">
-						<h3>KIS-PBI</h3>
-
-						<p>Rekomendasi Kis</p>
-					</div>
-					<div class="icon">
-						<i class="fa fa-credit-card"></i>
-					</div>
-					<a href="#" class="small-box-footer"  data-toggle="modal" data-target="#pbiModal">Klik disini <i
-							class="fa fa-arrow-circle-right"></i></a>
-				</div>
-			</div>
-			<!-- ./col -->
-			<div class="col-lg-3 col-xs-6">
-				<!-- small box -->
-				<div class="small-box bg-aqua">
-					<div class="inner">
-						<h3>PPKS</h3>
-
-						<p>Disabilitas</p>
-					</div>
-					<div class="icon">
-						<i class="fa fa-wheelchair"></i>
-					</div>
-					<a href="#" class="small-box-footer"  data-toggle="modal" data-target="#ppksModal">Klik disini <i
-							class="fa fa-arrow-circle-right"></i></a>
-				</div>
-			</div>
-		</div>
+		<table id="list_pengajuan" class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>Nama</th>
+					<th>NIK</th>
+					<th>File</th>
+					<th>Download</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>No</th>
+					<th>Nama</th>
+					<th>NIK</th>
+					<th>File</th>
+					<th>Download</th>
+				</tr>
+			</tfoot>
+		</table>
 	</div>
+	<!-- /.box-body -->
 </div>
-
-
-<!-- -- PBI MODAL -- -->
-<div class="modal fade" id="pbiModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Cek NIK yang diusulkan</h4>
-			</div>
-			<form method="post" id="form-nik-pbi" name="form-nik-pbi" action="<?=site_url('dashboard/cek_nik_pbi')?>" enctype="multipart/form-data">
-			<div class="modal-body">
-				<div class="row">
-						<div class="col-md-12">
-						<div class="form-group">
-							<label>NIK KIS PBI</label>
-							<input type="number" class="form-control no-arrow" id="nik_pbi" name="nik_pbi" placeholder="Masukkan NIK" data-rule-required="true" data-rule-minlength="16" data-rule-maxlength="20" data-msg-required="NIK masih kosong, silakan isi" data-msg-minlength="NIK minimal 16 karakter" data-msg-maxlength="NIK maksimal 20 karakter">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-				<button type="submit" id="kispbi" class="btn btn-primary">Cek Data</button>
-			</div>
-			</form>
-		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-
-<!-- -- PPKS MODAL -- -->
-<div class="modal fade" id="ppksModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Cek NIK yang diusulkan</h4>
-			</div>
-			<form method="post" id="form-nik-ppks" name="form-nik-ppks" action="<?=site_url('dashboard/cek_nik_ppks')?>" enctype="multipart/form-data">
-			<div class="modal-body">
-				<div class="row">
-						<div class="col-md-12">
-						<div class="form-group">
-							<label>NIK PPKS</label>
-							<input type="number" class="form-control no-arrow" id="nik_ppks" name="nik_ppks"  placeholder="Masukkan NIK" data-rule-required="true" data-rule-minlength="16" data-rule-maxlength="20" data-msg-required="NIK masih kosong, silakan isi" data-msg-minlength="NIK minimal 16 karakter" data-msg-maxlength="NIK maksimal 20 karakter">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary">Cek Data</button>
-			</div>
-			</form>
-		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-<!-- <div id="result" class="warning">Please login!</div> -->
 
 <script src="<?php echo base_url();?>/assets/backend/js/plugin/jquery.validate.js"></script>
+<script src="<?php echo base_url();?>/assets/backend/js/plugin/additional-methods.min.js"></script>
 <script>
-	$("#form-nik-pbi").validate({
-		onkeyup: false,
+	$(document).ready(function () {
+		$('#list_pengajuan').DataTable({
+			"processing": true,
+			"serverSide": true,
+			"ajax": {
+				"url": "<?=site_url('dashboard/list_data')?>",
+				"type": "POST"
+			},
+			"columnDefs": [{
+					"targets": [0, 3, 4],
+					"orderable": false
+				}
+
+			],
+			"order": []
+
+		})
 	})
 
-	$("#form-nik-ppks").validate({
-		onkeyup: false,
-	})
+	// function byid(id, type) {
+
+	// 	$.ajax({
+	// 		type: "GET",
+	// 		url: "<?=base_url('user/byid/')?>" + id,
+	// 		dataType: "JSON",
+	// 		success: function (response) {
+	// 			if (type == 'edit') {
+	// 				$('[name="user_id-edit"]').val(response.query.data.user_id);
+	// 				$('[name="username-edit"]').val(response.query.data.username);
+	// 				$('[name="name-edit"]').val(response.query.data.name);
+	// 				$('[name="address-edit"]').val(response.query.data.address);
+	// 				$('#editModal').modal({
+	// 					'show': true,
+	// 					'keyboard': false,
+	// 					'backdrop': 'static'
+	// 				});
+	// 			}else if(type == 'session'){
+	// 				$('[name="id-session"]').val(response.query.data.user_id);
+	// 				$('#sessionModal').modal({
+	// 				'show': true,
+	// 				'keyboard': false,
+	// 				'backdrop': 'static'
+	// 				});
+	// 			}else{
+	// 				$('[name="user_id_delete"]').val(response.query.data.user_id);
+	// 				$('#deleteModal').modal({
+	// 				'show': true,
+	// 				'keyboard': false,
+	// 				'backdrop': 'static'
+	// 				});
+	// 			}
+	// 		}
+	// 	});
+	// }
+
+	// $(document).ready(function(){
+	// 	jQuery.validator.addMethod("password", function( value, element ) {
+	// 	var result = this.optional(element) || value.length >= 6 && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[`~!@#$%^&*?])[A-Za-z\d`~!@#$%^&*?]{6,15}$/.test(value);
+	// 	if (!result) {
+	// 		element.value = "";
+	// 		var validator = this;
+	// 		setTimeout(function() {
+	// 			validator.blockFocusCleanup = true;
+	// 			element.focus();
+	// 			validator.blockFocusCleanup = false;
+	// 		}, 1);
+	// 	}
+	// 	return result;
+	// }, "Kata sandi harus mengandung setidaknya satu angka, satu huruf, satu huruf besar, satu karakter khusus dan antara 6 - 15 karakter.");
+
+	// $("#form-register").validate({
+	// 	onkeyup: false,
+	// 	})
+	// })
+
+	// $(document).ready(function(){
+	// 	jQuery.validator.addMethod("curl", function( value, element ) {
+	// 	var result = this.optional(element) || value.length >= 6 && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[`~!@#$%^&*?])[A-Za-z\d`~!@#$%^&*?]{6,15}$/.test(value);
+	// 	if (!result) {
+	// 		element.value = "";
+	// 		var validator = this;
+	// 		setTimeout(function() {
+	// 			validator.blockFocusCleanup = true;
+	// 			element.focus();
+	// 			validator.blockFocusCleanup = false;
+	// 		}, 1);
+	// 	}
+	// 	return result;
+	// }, "Kata sandi harus mengandung setidaknya satu angka, satu huruf, satu huruf besar, satu karakter khusus dan antara 6 - 15 karakter.");
+
+	// $("#form-edit").validate({
+	// 	onkeyup: false,
+	// 	})
+	// })
 </script>
