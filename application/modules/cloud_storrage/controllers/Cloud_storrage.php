@@ -69,8 +69,8 @@ class Cloud_storrage extends MY_Controller {
             'file_tmp1'   => $_FILES['ref_file1']['tmp_name'],
             'file_tmp2'   => $_FILES['ref_file2']['tmp_name'],
         );
-        // var_dump($data);
-        // die();
+        var_dump($data);
+        die();
         // $this->Cloud_storrage_m->add($data);
         // if($this->db->affected_rows()>0){
             try {

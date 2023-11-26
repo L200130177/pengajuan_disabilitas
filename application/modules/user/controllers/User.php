@@ -117,9 +117,10 @@ class User extends MY_Controller {
     {
         $key = getenv('ENCRYPT_PASSWORD');
         $data = array(
-            'username' 	=> htmlentities($this->input->post('username-edit')),
-            'name' 	    => htmlentities($this->input->post('name-edit')),
-            'address'   => htmlentities($this->input->post('address-edit')),
+            'username' 	    => htmlentities($this->input->post('username-edit')),
+            'name' 	        => htmlentities($this->input->post('name-edit')),
+            'address'       => htmlentities($this->input->post('address-edit')),
+            'updated_at'    => date("Y-m-d H:i:s"),
             );
             if(!empty($this->input->post('password-edit'))){
                 $data['password'] = htmlentities(hash_hmac('sha256', $this->input->post('password-edit'), $key));

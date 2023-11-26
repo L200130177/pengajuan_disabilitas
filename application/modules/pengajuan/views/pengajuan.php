@@ -106,7 +106,15 @@ input[type=number] {
 								</div>
 								<div class="form-group">
 									<label>Agama</label>
-									<input type="text" class="form-control form-control-user" id="agama" name="agama" placeholder="Masukkan Agama" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="100" data-msg-required="Agama masih kosong, silakan isi" data-msg-minlength="Agama minimal 4 karakter">
+									<select name="agama" id="agama" class="form-control" data-rule-required="true" data-msg-required="Agama belum dipilih, pilih salah satu">
+										<option value="">- Pilih -</option>
+										<option value="ISLAM">ISLAM</option>
+										<option value="KRISTEN">KRISTEN</option>
+										<option value="KATHOLIK">KATHOLIK</option>
+										<option value="HINDU">HINDU</option>
+										<option value="BUDDHA">BUDDHA</option>
+										<option value="KHONGHUCHU">KHONGHUCHU</option>
+									</select>
 								</div>
 								<div class="form-group">
 									<label>Anak ke (Jumlah Saudara)</label>
@@ -114,31 +122,73 @@ input[type=number] {
 								</div>
 								<div class="form-group">
 									<label>Pendidikan Terakhir</label>
-									<input type="text" class="form-control form-control-user" id="pendidikan_terakhir" name="pendidikan_terakhir" placeholder="Masukkan Pendidikan terakhir" data-rule-required="true" data-rule-maxlength="100" data-msg-required="Pendidikan terakhir masih kosong, silakan isi" data-msg-maxlength="Pendidikan terakhir maksimal 100 karakter">
+									<select name="pendidikan_terakhir" id="pendidikan_terakhir" class="form-control" data-rule-required="true" data-msg-required="Pendidikan Terakhir belum dipilih, pilih salah satu">
+										<option value="">- Pilih -</option>
+										<option value="SD">SD</option>
+										<option value="SMP">SMP</option>
+										<option value="SMA">SMA</option>
+										<option value="D3">D3</option>
+										<option value="S1/D4">S1/D4</option>
+										<option value="S2">S2</option>
+										<option value="S3">S3</option>
+									</select>
 								</div>
 								<div class="form-group">
 									<label>Status Pernikahan</label>
-									<input type="text" class="form-control form-control-user" id="status_pernikahan" name="status_pernikahan" placeholder="Masukkan Status pernikahan" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Status pernikahan masih kosong, silakan isi" data-msg-minlength="Status pernikahan minimal 4 karakter" data-msg-maxlength="Status pernikahan maksimal 20 karakter">
+									<select name="status_pernikahan" id="status_pernikahan" class="form-control" data-rule-required="true" data-msg-required="Status Pernikahan belum dipilih, pilih salah satu">
+										<option value="">- Pilih -</option>
+										<option value="kawin">kawin</option>
+										<option value="belum kawin">belum kawin</option>
+										<option value="cerai hidup">cerai hidup</option>
+										<option value="cerai mati">cerai mati</option>
+									</select>
 								</div>
 								<div class="form-group">
 									<label>Pekerjaan</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<select name="pekerjaan" id="pekerjaan" class="form-control" data-rule-required="true" data-msg-required="Pekerjaan belum dipilih, pilih salah satu">
+										<option value="">- Pilih -</option>
+										<option value="PEGAWAI NEGERI">PEGAWAI NEGERI</option>
+										<option value="PEGAWAI SWASTA">PEGAWAI SWASTA</option>
+										<option value="BURUH / TANI">BURUH / TANI</option>
+										<option value="MAHASISWA / PELAJAR">MAHASISWA / PELAJAR</option>
+										<option value="TNI / POLRI">TNI / POLRI</option>
+										<option value="IBU RUMAH TANGGA">IBU RUMAH TANGGA</option>
+										<option value="LAINNYA">LAINNYA</option>
+									</select>
 								</div>
 								<div class="form-group">
-									<label>Jaminan Sosial (BPJS / KIS / Jamkesda)</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<label>Jenis layanan yang pernah diterima</label>
+									<select name="jenis_layanan_diterima" id="jenis_layanan_diterima" class="form-control" data-rule-required="true" data-msg-required="Jenis layanan belum dipilih, pilih salah satu">
+										<option value="">- Pilih -</option>
+										<option value="PKH">PKH</option>
+										<option value="KIS">KIS</option>
+										<option value="ALAT BANTU">ALAT BANTU</option>
+										<option value="BPNT">BPNT</option>
+										<option value="KIP">KIP</option>
+										<option value="DTKS">DTKS</option>
+										<option value="LAINNYA">LAINNYA</option>
+									</select>
+								</div>
+								<div class="form-group jenis_layanan_lainnya">
+									<input type="text" class="form-control form-control-user" id="jenis_layanan_lainnya" name="jenis_layanan_lainnya" placeholder="Masukkan Jenis layanan" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="100" data-msg-required="Jenis layanan masih kosong, silakan isi" data-msg-minlength="Jenis layanan minimal 4 karakter" data-msg-maxlength="Jenis layanan maksimal 100 karakter">
 								</div>
 								<div class="form-group">
-									<label>Jenis Kedisabilitasan</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<label>Jenis kedisabilitasan</label>
+									<select name="jenis_kedisabilitasan" id="jenis_kedisabilitasan" class="form-control" data-rule-required="true" data-msg-required="Jenis kedisabilitasan belum dipilih, pilih salah satu">
+										<option value="">- Pilih -</option>
+										<option value="Disabilitas Sensorik">Disabilitas Sensorik</option>
+										<option value="Disabilitas Fisik">Disabilitas Fisik</option>
+										<option value="Disabilitas INtelektual">Disabilitas INtelektual</option>
+										<option value="Disabilitas Mental">Disabilitas Mental</option>
+									</select>
 								</div>
 								<div class="form-group">
 									<label>No Telepon / HP</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<input type="number" class="form-control form-control-user" id="no_telepon" name="no_telepon" placeholder="Masukkan No telepon / HP" data-rule-required="true" data-rule-minlength="9" data-rule-maxlength="20" data-msg-required="No telepon / HP masih kosong, silakan isi" data-msg-minlength="No telepon / HP minimal 9 karakter" data-msg-maxlength="No telepon / HP maksimal 20 karakter">
 								</div>
 								<div class="form-group">
 									<label>Program Rehabilitasi / Pelatihan (yang pernah diikuti)</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<input type="text" class="form-control form-control-user" id="program_rehabilitasi" name="program_rehabilitasi" placeholder="Masukkan Program Rehabilitasi" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Program Rehabilitasi masih kosong, silakan isi" data-msg-minlength="Program Rehabilitasi minimal 4 karakter" data-msg-maxlength="Program Rehabilitasi maksimal 20 karakter">
 								</div>
 								</div>
 							</div>
@@ -159,35 +209,52 @@ input[type=number] {
 								<div class="col-md-12">
 								<div class="form-group">
 									<label>Nama Wali</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<input type="text" class="form-control form-control-user" id="nama_wali" name="nama_wali" placeholder="Masukkan Nama Wali" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="100" data-msg-required="Nama Wali masih kosong, silakan isi" data-msg-minlength="Nama Wali minimal 4 karakter" data-msg-maxlength="Nama Wali maksimal 100 karakter">
 								</div>
 								<div class="form-group">
 									<label>Alamat Wali</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<input type="text" class="form-control form-control-user" id="alamat_wali" name="alamat_wali" placeholder="Masukkan Alamat Wali" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="100" data-msg-required="Alamat Wali masih kosong, silakan isi" data-msg-minlength="Alamat Wali minimal 4 karakter" data-msg-maxlength="Alamat Wali maksimal 100 karakter">
 								</div>
 								<div class="form-group">
 									<label>Pekerjaan</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<select name="pekerjaan_wali" id="pekerjaan_wali" class="form-control" data-rule-required="true" data-msg-required="Pekerjaan belum dipilih, pilih salah satu">
+										<option value="">- Pilih -</option>
+										<option value="PEGAWAI NEGERI">PEGAWAI NEGERI</option>
+										<option value="PEGAWAI SWASTA">PEGAWAI SWASTA</option>
+										<option value="BURUH / TANI">BURUH / TANI</option>
+										<option value="MAHASISWA / PELAJAR">MAHASISWA / PELAJAR</option>
+										<option value="TNI / POLRI">TNI / POLRI</option>
+										<option value="IBU RUMAH TANGGA">IBU RUMAH TANGGA</option>
+										<option value="LAINNYA">LAINNYA</option>
+									</select>
 								</div>
 								<div class="form-group">
 									<label>Penghasilan</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<input type="number" class="form-control form-control-user" id="penghasilan" name="penghasilan" placeholder="Masukkan Penghasilan" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Penghasilan masih kosong, silakan isi" data-msg-minlength="Penghasilan minimal 4 karakter" data-msg-maxlength="Penghasilan maksimal 20 karakter">
 								</div>
 								<div class="form-group">
 									<label>Agama</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<select name="agama_wali" id="agama_wali" class="form-control" data-rule-required="true" data-msg-required="Agama belum dipilih, pilih salah satu">
+										<option value="">- Pilih -</option>
+										<option value="ISLAM">ISLAM</option>
+										<option value="KRISTEN">KRISTEN</option>
+										<option value="KATHOLIK">KATHOLIK</option>
+										<option value="HINDU">HINDU</option>
+										<option value="BUDDHA">BUDDHA</option>
+										<option value="KHONGHUCHU">KHONGHUCHU</option>
+									</select>
 								</div>
 								<div class="form-group">
-									<label>Jml Tanggungan Anak / Keluarga</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<label>Jumlah Tanggungan Anak / Keluarga</label>
+									<input type="number" class="form-control form-control-user" id="jumlah_anak" name="jumlah_anak" placeholder="Masukkan Jumlah tanggungan anak" data-rule-required="true" data-rule-maxlength="20" data-msg-required="Jumlah tanggungan anak masih kosong, silakan isi" data-msg-maxlength="Jumlah tanggungan anak maksimal 20 karakter">
 								</div>
 								<div class="form-group">
 									<label>Nomor HP Ayah / Ibu</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<input type="number" class="form-control form-control-user" id="nohp_wali" name="nohp_wali" placeholder="Masukkan Nomor HP" data-rule-required="true" data-rule-maxlength="20" data-msg-required="Nomor HP masih kosong, silakan isi" data-msg-maxlength="Nomor HP maksimal 20 karakter">
 								</div>
 								<div class="form-group">
 									<label>Hubungan dengan PPKS</label>
-									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukkan Username" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+									<input type="text" class="form-control form-control-user" id="hubungan_ppks" name="hubungan_ppks" placeholder="Masukkan Hubungan dengan ppks" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Hubungan dengan ppks masih kosong, silakan isi" data-msg-minlength="Hubungan dengan ppks minimal 4 karakter" data-msg-maxlength="Hubungan dengan ppks maksimal 20 karakter">
 								</div>
 								</div>
 							</div>
@@ -304,8 +371,19 @@ input[type=number] {
 				}
 
 			})
-			
 		})
+
+		$('.jenis_layanan_lainnya').hide();
+		$('select[name=jenis_layanan_diterima]').change(function () {
+				$("select[name=jenis_layanan_diterima] option:selected").each(function () {
+				var value = $(this).val();
+				if(value == "LAINNYA") {
+					$('.jenis_layanan_lainnya').show();
+				
+				}
+			})
+		})
+
 		$("#form-pengajuan").validate({
 		onkeyup: false,
 		})
