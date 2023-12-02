@@ -7,7 +7,7 @@ class Dashboard extends MY_Controller {
     {
         parent::__construct();
         // check_not_validate();
-        // check_not_login();
+        check_not_login();
         $this->load->model(['Maintenance_m', 'dashboard/Dashboard_m']);
         $name = $this->session->userdata('name');
         $this->db->set('activity', date("Y-m-d H:i:s"));
@@ -44,12 +44,21 @@ class Dashboard extends MY_Controller {
             $no++;
             $nik = base64_encode($this->encryption->encrypt($usr->nik));
             $ref_file = "http://103.169.233.45:9000/dinsos/". date( "F-Y", strtotime($usr->created_at)) . "/" . $usr->nama . "_" . $usr->nik . "/";
+            $download_map = date( "F-Y", strtotime($usr->created_at)) . "/" . $usr->nama . "_" . $usr->nik . "/";
+            $zip_name = $usr->nama . "_" . $usr->nik . ".zip";
             $row = array();
             $row[] = $no.".";
             $row[] = $usr->nama;
             $row[] = $usr->nik;
             $row[] = '<img src="'.$ref_file.$usr->ref_file.'" class="user-image" alt="User Image" style="width: 200px;height:100px;">';
-            $row[] = '<a href="'.$ref_file.$usr->ref_file.'" target="_blank" class="btn btn-success btn-xs">Download Dokumen</a>';
+            $row[] = '<form method="post" action="dashboard/download_folder" enctype="multipart/form-data">
+                    <input type="hidden" id="download" name="download" value="'.$download_map.'">
+                    <input type="hidden" id="zip_name" name="zip_name" value="'.$zip_name.'">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i> Download</button>
+                    </form>';
+            // $row[] = '<button type="button" title="edit user" class="btn btn-primary btn-xs" onclick="download(' . "'" . $download_map . "', 'download'" . ')">
+            //             <i class="fa fa-pencil"></i> Update
+            //             </button>';
             // $row[] = $usr->level  == 1 ? "Admin" : "User";  
             // $row[] = '<button type="button" title="edit user" class="btn btn-primary btn-xs" onclick="byid(' . "'" . $id . "', 'edit'" . ')">
             //             <i class="fa fa-pencil"></i> Update
@@ -83,5 +92,41 @@ class Dashboard extends MY_Controller {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-ban"></i>NIK sudah terdaftar</div>');
             redirect('pengajuan');
         }
+    }
+
+    public function download_folder()
+    {   
+        $name = $this->input->post('zip_name');
+        $s3 = new Aws\S3\S3Client([
+            'region' => 'us-west-2', 
+            'version' => 'latest',
+            'endpoint' => getenv('MINIO_ENDPOINT'),
+            'useSSL' => false,
+            'use_path_style_endpoint' => true,
+            'credentials' => [
+                'key'    => getenv('MINIO_ACCESS_KEY'),
+                'secret' => getenv('MINIO_SECRET_KEY'),
+        ],
+        ]);
+
+        $s3->registerStreamWrapper();
+        $zip = new ZipArchive;
+        $zip->open($name, ZipArchive::CREATE);
+        $bucket = 'dinsos';
+        $prefix = $this->input->post('download'); // ex.: 'image/test/folder/'
+        $objects = $s3->getIterator('ListObjects', array(
+            'Bucket' => $bucket,
+            'Prefix' => $prefix
+        ));
+        foreach ($objects as $object) {
+            $contents = file_get_contents("s3://{$bucket}/{$object['Key']}"); // get file
+            $zip->addFromString($object['Key'], $contents); // add file contents in zip
+        }
+        $zip->close();
+        // Download de zip file
+        header("Content-Description: File Transfer"); 
+        header("Content-Type: application/octet-stream"); 
+        header("Content-Disposition: attachment; filename=$name"); 
+        readfile ($name);
     }
 }

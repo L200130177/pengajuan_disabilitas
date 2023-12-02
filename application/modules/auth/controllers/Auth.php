@@ -12,8 +12,8 @@ class Auth extends MY_Controller {
 
 	public function index()
 	{
-        // check_not_validate();
-        // check_already_login();
+        check_not_validate();
+        check_already_login();
         $maintenance = $this->Maintenance_m->maintenance();
         if($maintenance != true){
             $this->load->view('login');
@@ -69,7 +69,7 @@ class Auth extends MY_Controller {
         $this->db->set('remember_token', null);
         $this->db->where('name', $name);
         $this->db->update('user');
-		redirect('landing');
+		redirect('pengajuan');
     }
 
 }

@@ -13,7 +13,7 @@ class Dashboard_m extends CI_Model
 	private function _get_datatables_query() 
     {
 
-        $this->db->select('id_pengajuan, nama, nik, ref_file, created_at, is_rekomendasi');
+        $this->db->select('id_pengajuan, nama, nik, ref_file, created_at');
         $this->db->from('pengajuan_disabilitas');
 
         $i = 0;
@@ -42,7 +42,7 @@ class Dashboard_m extends CI_Model
 	public function get_datatables() 
     {
         $this->_get_datatables_query();
-        $this->db->where('is_rekomendasi', 0);
+        // $this->db->where('stat', 0);
         if(@$_POST['length'] != -1)
         $this->db->limit(@$_POST['length'], @$_POST['start']);
         $query = $this->db->get();

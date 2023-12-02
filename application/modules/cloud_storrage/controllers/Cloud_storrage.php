@@ -236,7 +236,7 @@ class Cloud_storrage extends MY_Controller {
             $objects = $s3client ->listObjectsV2([
                 'Bucket' => $bucket,
                 'Delimiter'=>'/',
-                'Prefix' => 'downloads'
+                'Prefix' => 'December-2023/dani_1234567890123451'
             ]);
             foreach ($objects['Contents']  as $object) {
                 echo $object['Key'] . PHP_EOL;
@@ -291,8 +291,12 @@ class Cloud_storrage extends MY_Controller {
 
     }
 
-    public function download_object()
+    public function download_folder()
     {
+
+        $myDirectoryName = 'dinsos/Desember-2023/dani_1234567890123451';
+        // include dirname(__FILE__) . '/aws.phar';
+        // $baseDirectory = dirname(__FILE__) .'/'.$myDirectoryName;
 
         //Create a S3Client
         $s3client = new Aws\S3\S3Client([
@@ -306,22 +310,127 @@ class Cloud_storrage extends MY_Controller {
                 'secret' => getenv('MINIO_SECRET_KEY'),
         ],
         ]);
+
+        $s3client->registerStreamWrapper();
         
-        $bucket = getenv('MINIO_ENDPOINT');
+        $bucket = getenv('MINIO_ENDPOINT') . $myDirectoryName;
         $key = "65377578c8993_response.txt";
-        
-        try {
-            // Save object to a file.
-            $result = $s3Client->getObject(array(
-                'Bucket' => $bucket,
-                'Key' => $key,
-                'SaveAs' => $key
-            ));
-        } catch (S3Exception $e) {
-            echo $e->getMessage() . "\n";
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($bucket),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        foreach($iterator as $name => $object) {
+            if ($object->getFileName() !== '.' && $object->getFileName() !== '..') {
+                $relative = substr($name,strlen($bucket)+1);
+                if (!file_exists($myDirectoryName . '/' . $path . '/' . $relative)) {
+                    if ($object->isDir()) {
+                        mkdir($myDirectoryName . '/' . $path . '/' . $relative, 0777, true);
+                    } else {
+                        file_put_contents(
+                            $myDirectoryName . '/' . $path . '/' . $relative,
+                            file_get_contents($name)
+                        );
+                    }
+                }
+            }
         }
+        
+        // try {
+        //     // Save object to a file.
+        //     $result = $s3Client->getObject(array(
+        //         'Bucket' => $bucket,
+        //         'Key' => $key,
+        //         'SaveAs' => $key
+        //     ));
+        // } catch (S3Exception $e) {
+        //     echo $e->getMessage() . "\n";
+        // }
          
          
+    }
+
+    public function download_zip()
+    {
+
+        $s3client = new Aws\S3\S3Client([
+            'region' => 'us-west-2', 
+            'version' => 'latest',
+            'endpoint' => getenv('MINIO_ENDPOINT'),
+            'useSSL' => false,
+            'use_path_style_endpoint' => true,
+            'credentials' => [
+                'key'    => getenv('MINIO_ACCESS_KEY'),
+                'secret' => getenv('MINIO_SECRET_KEY'),
+        ],
+        ]);
+        // $bucket = 'dinsos';
+        // $key = 'December-2023';
+        // $coba = $s3client->getObjectUrl($bucket, $key);
+        // var_dump($coba);
+        // die();
+
+        $s3client->registerStreamWrapper();
+
+        // make sure to send all headers first
+        // Content-Type is the most important one (probably)
+        //
+        header('Content-Type: application/octet-stream');
+        header('Content-disposition: attachment; filename="file.zip"');
+
+        // use popen to execute a unix command pipeline
+        // and grab the stdout as a php stream
+        // (you can use proc_open instead if you need to 
+        // control the input of the pipeline too)
+        //
+        $fp = popen('zip -r - http://103.169.233.45:9000/dinsos/December-2023/dani_1234567890123451/656b5ba479b9e_maintain.png http://103.169.233.45:9000/dinsos/December-2023/dani_1234567890123451/WhatsApp Image 2023-09-08 at 18.59.46.jpg', 'r');
+
+        // pick a bufsize that makes you happy (8192 has been suggested).
+        $bufsize = 8192;
+        $buff = '';
+        while( !feof($fp) ) {
+        $buff = fread($fp, $bufsize);
+        echo $buff;
+        }
+        pclose($fp);
+    }
+
+    public function list_download()
+    {
+        $nama = 'December-2023/dani_1234567890123451.zip';
+        $s3 = new Aws\S3\S3Client([
+            'region' => 'us-west-2', 
+            'version' => 'latest',
+            'endpoint' => getenv('MINIO_ENDPOINT'),
+            'useSSL' => false,
+            'use_path_style_endpoint' => true,
+            'credentials' => [
+                'key'    => getenv('MINIO_ACCESS_KEY'),
+                'secret' => getenv('MINIO_SECRET_KEY'),
+        ],
+        ]);
+
+        $s3->registerStreamWrapper();
+        $zip = new ZipArchive;
+        $zip->open('dani_1234567890123459.zip', ZipArchive::CREATE);
+        $bucket = 'dinsos';
+        $prefix = 'December-2023/dani aditya_1234567890123459'; // ex.: 'image/test/folder/'
+        $objects = $s3->getIterator('ListObjects', array(
+            'Bucket' => $bucket,
+            'Prefix' => $prefix
+        ));
+        foreach ($objects as $object) {
+            $contents = file_get_contents("s3://{$bucket}/{$object['Key']}"); // get file
+            $zip->addFromString($object['Key'], $contents); // add file contents in zip
+        }
+        $zip->close();
+        // Download de zip file
+        header("Content-Description: File Transfer"); 
+        header("Content-Type: application/octet-stream"); 
+        // header("Content-Disposition: attachment; filename=$nama"); 
+        header("Content-disposition: attachment; filename=\"dani_1234567890123459.zip\"");
+        readfile ('dani_1234567890123459.zip');
+
     }
 
 }

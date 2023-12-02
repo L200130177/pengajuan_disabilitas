@@ -56,7 +56,7 @@ class Pengajuan extends MY_Controller {
             'hubungan_ppks' 	        => htmlentities($this->input->post('hubungan_ppks')),
             'jenis_layanan' 	        => htmlentities($this->input->post('jenis_layanan')),
             'ref_file' 	                => $data_minio['file_name1'],
-            'is_rekomendasi' 	        => 0,
+            'status' 	                => "PENDING",
             );
         
         $check_nik = $this->db->get_where('pengajuan_disabilitas', array('nik' => $this->input->post('nik')))->row_array();
@@ -107,6 +107,20 @@ class Pengajuan extends MY_Controller {
         }else{
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-ban"></i>NIK sudah terdaftar</div>');
             redirect('pengajuan');
+        }
+    }
+
+    public function search()
+    {
+        $check_nik = $this->db->get_where('pengajuan_disabilitas', array('nik' => $this->input->post('search_nik')))->row_array();
+        if(isset($check_nik) != $this->input->post('search_nik')){
+            echo "nik tidak terdaftar";
+            // var_dump($check_nik);
+            // die();
+        }else{
+            echo "nik ada";
+            // var_dump($check_nik);
+            // die();
         }
     }
 

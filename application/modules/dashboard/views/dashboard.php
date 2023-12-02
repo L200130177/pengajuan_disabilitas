@@ -59,41 +59,20 @@
 		})
 	})
 
-	// function byid(id, type) {
+	function download(download_map) {
 
-	// 	$.ajax({
-	// 		type: "GET",
-	// 		url: "<?=base_url('user/byid/')?>" + id,
-	// 		dataType: "JSON",
-	// 		success: function (response) {
-	// 			if (type == 'edit') {
-	// 				$('[name="user_id-edit"]').val(response.query.data.user_id);
-	// 				$('[name="username-edit"]').val(response.query.data.username);
-	// 				$('[name="name-edit"]').val(response.query.data.name);
-	// 				$('[name="address-edit"]').val(response.query.data.address);
-	// 				$('#editModal').modal({
-	// 					'show': true,
-	// 					'keyboard': false,
-	// 					'backdrop': 'static'
-	// 				});
-	// 			}else if(type == 'session'){
-	// 				$('[name="id-session"]').val(response.query.data.user_id);
-	// 				$('#sessionModal').modal({
-	// 				'show': true,
-	// 				'keyboard': false,
-	// 				'backdrop': 'static'
-	// 				});
-	// 			}else{
-	// 				$('[name="user_id_delete"]').val(response.query.data.user_id);
-	// 				$('#deleteModal').modal({
-	// 				'show': true,
-	// 				'keyboard': false,
-	// 				'backdrop': 'static'
-	// 				});
-	// 			}
-	// 		}
-	// 	});
-	// }
+		$.ajax({
+			type: "POST",
+			url: "<?=base_url('dashboard/download_folder')?>",
+			data: {
+				download_map: download_map
+			},
+			dataType: "JSON",
+			success: function (data) {
+				console.log('BERHASIL');
+			}
+		});
+	}
 
 	// $(document).ready(function(){
 	// 	jQuery.validator.addMethod("password", function( value, element ) {
