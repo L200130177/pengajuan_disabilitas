@@ -122,14 +122,14 @@
 							<div class="box-body">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="form-group">
+										<!-- <div class="form-group">
 											<label>Email</label>
 											<input type="text" class="form-control form-control-user" id="email"
 												name="email" placeholder="Masukkan Email" data-rule-required="true"
 												data-rule-email="true"
 												data-msg-required="Email masih kosong, silakan isi"
 												data-msg-email="Email tidak valid">
-										</div>
+										</div> -->
 										<div class="form-group">
 											<label>Nama</label>
 											<input type="text" class="form-control form-control-user" id="nama"
@@ -432,21 +432,57 @@
 													Ketrampilan</option>
 												<option value="rujukan ke balai rehsos / panti">Rujukan ke Balai Rehsos
 													/ Panti</option>
+												<option value="permohonan bursa kerja">Permohonan Bursa kerja</option>
+												<option value="permohonan bantuan modal usaha">Permohonan Bantuan Modal Usaha</option>
 											</select>
 										</div>
-										<div class="form-group file1_type">
-											<label>File 1</label>
-											<input type="file" class="form-control" id="ref_file1" name="ref_file1"
+										<div class="form-group kartu_keluarga_type">
+											<label>Kartu Keluarga</label>
+											<input type="file" class="form-control" id="kartu_keluarga" name="kartu_keluarga"
 												data-rule-required="true"
 												data-msg-required="Belum ada file untuk di upload">
 										</div>
-										<div class="form-group file2_type">
-											<label>File 2</label>
-											<input type="file" class="form-control" id="ref_file2" name="ref_file2">
+										<div class="form-group ktp_type">
+											<label>KTP</label>
+											<input type="file" class="form-control" id="ktp" name="ktp"
+												data-rule-required="true"
+												data-msg-required="Belum ada file untuk di upload">
 										</div>
-										<div class="form-group file3_type">
-											<label>File 3</label>
-											<input type="file" class="form-control" id="ref_file3" name="ref_file3">
+										<div class="form-group pas_foto_type">
+											<label>Pas Foto berwarna seluruh badan</label>
+											<input type="file" class="form-control" id="pas_foto" name="pas_foto"
+												data-rule-required="true"
+												data-msg-required="Belum ada file untuk di upload">
+										</div>
+										<div class="form-group sktm_type">
+											<label>Surat keterangan tidak mampu dari kepala desa</label>
+											<input type="file" class="form-control" id="sktm" name="sktm"
+												data-rule-required="true"
+												data-msg-required="Belum ada file untuk di upload">
+										</div>
+										<div class="form-group ijazah_type">
+											<label>Ijazah terakhir</label>
+											<input type="file" class="form-control" id="ijazah" name="ijazah"
+												data-rule-required="true"
+												data-msg-required="Belum ada file untuk di upload">
+										</div>
+										<div class="form-group sertifikat_keahlian_type">
+											<label>Sertifikat keahlian</label> <small> (bila memiliki)</small>
+											<input type="file" class="form-control" id="sertifikat_keahlian" name="sertifikat_keahlian"
+												data-rule-required="true"
+												data-msg-required="Belum ada file untuk di upload">
+										</div>
+										<div class="form-group domisili_type">
+											<label>Keterangan domisili dari desa</label>
+											<input type="file" class="form-control" id="domisili" name="domisili"
+												data-rule-required="true"
+												data-msg-required="Belum ada file untuk di upload">
+										</div>
+										<div class="form-group foto_usaha_type">
+											<label>Foto usaha yang dimiliki</label>
+											<input type="file" class="form-control" id="foto_usaha" name="foto_usaha"
+												data-rule-required="true"
+												data-msg-required="Belum ada file untuk di upload">
 										</div>
 									</div>
 								</div>
@@ -492,32 +528,53 @@
 	<script src="<?php echo base_url();?>/assets/backend/js/plugin/additional-methods.min.js"></script>
 	<script>
 		$(document).ready(function () {
-			$('.file1_type').hide();
-			$('.file2_type').hide();
-			$('.file3_type').hide();
+			$('.kartu_keluarga_type').hide();
+			$('.ktp_type').hide();
+			$('.pas_foto_type').hide();
+			$('.sktm_type').hide();
+			$('.ijazah_type').hide();
+			$('.sertifikat_keahlian_type').hide();
+			$('.domisili_type').hide();
+			$('.foto_usaha_type').hide();
 			$('select[name=jenis_layanan]').change(function () {
 				$("select[name=jenis_layanan] option:selected").each(function () {
 					var value = $(this).val();
-					if (value == "kursi roda biasa" || value == "kaki / tangan palsu" || value ==
-						"alat bantu dengar") {
-						$('.file2_type').hide();
-						$('.file3_type').hide();
-						$('.file1_type').show();
-
-					} else if (value == "sepatu avo") {
-						$('.file1_type').hide();
-						$('.file3_type').hide();
-						$('.file2_type').show();
-
-					} else if (value == "wolker") {
-						$('.file1_type').hide();
-						$('.file2_type').hide();
-						$('.file3_type').show();
-
-					} else if (value == "tongkat putih") {
-						$('.file1_type').show();
-						$('.file2_type').show();
-						$('.file3_type').show();
+					if (value != "bimbingan pelatihan ketrampilan" && value != "permohonan bursa kerja" && value != "permohonan bantuan modal usaha") {
+						$('.kartu_keluarga_type').show();
+						$('.ktp_type').show();
+						$('.pas_foto_type').show();
+						$('.sktm_type').show();
+						$('.ijazah_type').hide();
+						$('.sertifikat_keahlian_type').hide();
+						$('.domisili_type').hide();
+						$('.foto_usaha_type').hide();
+					} else if (value == "bimbingan pelatihan ketrampilan") {
+						$('.kartu_keluarga_type').show();
+						$('.ktp_type').show();
+						$('.pas_foto_type').show();
+						$('.sktm_type').show();
+						$('.ijazah_type').show();
+						$('.sertifikat_keahlian_type').hide();
+						$('.domisili_type').hide();
+						$('.foto_usaha_type').hide();
+					} else if (value == "permohonan bursa kerja") {
+						$('.kartu_keluarga_type').show();
+						$('.ktp_type').show();
+						$('.pas_foto_type').show();
+						$('.sktm_type').show();
+						$('.ijazah_type').show();
+						$('.sertifikat_keahlian_type').show();
+						$('.domisili_type').show();
+						$('.foto_usaha_type').hide();
+					} else if (value == "permohonan bantuan modal usaha") {
+						$('.kartu_keluarga_type').show();
+						$('.ktp_type').show();
+						$('.pas_foto_type').show();
+						$('.sktm_type').show();
+						$('.ijazah_type').show();
+						$('.sertifikat_keahlian_type').hide();
+						$('.domisili_type').hide();
+						$('.foto_usaha_type').show();
 					}
 
 				})

@@ -17,7 +17,7 @@
 					<th>No</th>
 					<th>Nama</th>
 					<th>NIK</th>
-					<th>File</th>
+					<th>Status</th>
 					<th>Download</th>
 				</tr>
 			</thead>
@@ -28,7 +28,7 @@
 					<th>No</th>
 					<th>Nama</th>
 					<th>NIK</th>
-					<th>File</th>
+					<th>Status</th>
 					<th>Download</th>
 				</tr>
 			</tfoot>
