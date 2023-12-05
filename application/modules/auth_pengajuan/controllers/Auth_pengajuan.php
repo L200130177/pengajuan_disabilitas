@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends MY_Controller {
+class Auth_pengajuan extends MY_Controller {
 
     function __construct()
     {
@@ -47,18 +47,18 @@ class Auth extends MY_Controller {
                     $this->db->where('username', $username);
                     $this->db->update('user');
                     // $this->session->set_userdata($params);
-                    redirect('dashboard');
+                    redirect('dashboard_pengajuan');
                 }else{
                     $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-ban"></i>User sudah login</div>');
-                    redirect('auth');
+                    redirect('auth_pengajuan');
                 }
             }else{
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-ban"></i>Password salah !</div>');
-                redirect('auth');
+                redirect('auth_pengajuan');
             }
         }else{
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-ban"></i>Username tidak terdaftar</div>');
-            redirect('auth');
+            redirect('auth_pengajuan');
         }
     }
 

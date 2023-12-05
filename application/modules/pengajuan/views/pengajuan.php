@@ -79,7 +79,7 @@
 							<!-- User Account Menu -->
 							<li class="dropdown user user-menu">
 								<!-- Menu Toggle Button -->
-								<a href="<?=base_url('auth');?>">
+								<a href="<?=base_url('auth_pengajuan');?>">
 									<!-- The user image in the navbar-->
 									<img src="<?=base_url();?>assets/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
 									<!-- hidden-xs hides the username on small devices so only the image appears. -->

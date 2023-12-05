@@ -33,7 +33,7 @@
 		<div class="login-box-body">
 			<p class="login-box-msg">Sign in to start your session</p>
 			<?= $this->session->flashdata('message');?>
-			<form id="form-login" action="<?=site_url('auth/validate_login')?>" method="post">
+			<form id="form-login" action="<?=site_url('auth_pengajuan/validate_login')?>" method="post">
 				<div class="form-group has-feedback">
 					<input type="text" id="username" name="username" maxlength="20" class="form-control" placeholder="Username" data-rule-required="true" data-rule-minlength="4" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
 					<span class="glyphicon glyphicon-envelope form-control-feedback"></span>

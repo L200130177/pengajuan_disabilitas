@@ -45,7 +45,7 @@
 			"processing": true,
 			"serverSide": true,
 			"ajax": {
-				"url": "<?=site_url('dashboard/list_data')?>",
+				"url": "<?=site_url('dashboard_pengajuan/list_data')?>",
 				"type": "POST"
 			},
 			"columnDefs": [{
@@ -63,7 +63,7 @@
 
 		$.ajax({
 			type: "POST",
-			url: "<?=base_url('dashboard/download_folder')?>",
+			url: "<?=base_url('dashboard_pengajuan/download_folder')?>",
 			data: {
 				download_map: download_map
 			},

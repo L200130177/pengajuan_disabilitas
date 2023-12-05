@@ -72,7 +72,7 @@
 										<a href="#" class="btn btn-default btn-flat">Settings</a>
 									</div>
 									<div class="pull-right">
-										<a href="<?=site_url('auth/logout')?>" class="btn btn-danger btn-flat">Sign out</a>
+										<a href="<?=site_url('auth_pengajuan/logout')?>" class="btn btn-danger btn-flat">Sign out</a>
 									</div>
 								</li>
 							</ul>

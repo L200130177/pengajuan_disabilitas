@@ -1,6 +1,6 @@
 <?php
 
-class Dashboard_m extends CI_Model
+class Dashboard_pengajuan_m extends CI_Model
 {
     function __construct()
     {

@@ -46,7 +46,7 @@
 			<!-- /.lockscreen-image -->
 
 			<!-- lockscreen credentials (contains the form) -->
-			<form class="lockscreen-credentials" action="<?=site_url('validasi/validation_key')?>" method="post">
+			<form class="lockscreen-credentials" action="<?=site_url('validasi_pengajuan/validation_key')?>" method="post">
 				<div class="input-group">
 					<input type="password" id="validasi_key" name="validasi_key" class="form-control" placeholder="password">
 

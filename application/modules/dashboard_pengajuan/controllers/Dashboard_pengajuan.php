@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends MY_Controller {
+class Dashboard_pengajuan extends MY_Controller {
 
     function __construct()
     {
         parent::__construct();
         // check_not_validate();
         check_not_login();
-        $this->load->model(['Maintenance_m', 'dashboard/Dashboard_m']);
+        $this->load->model(['Maintenance_m', 'dashboard_pengajuan/Dashboard_pengajuan_m']);
         $name = $this->session->userdata('name');
         $this->db->set('activity', date("Y-m-d H:i:s"));
         $this->db->where('name', $name);
@@ -17,7 +17,7 @@ class Dashboard extends MY_Controller {
 
 	public function index()
 	{
-        // $data_dummy = $this->Dashboard_m->get()->result();
+        // $data_dummy = $this->Dashboard_pengajuan_m->get()->result();
         // $minio_date = date( "F-Y", strtotime($data_dummy[0]->created_at));
         // var_dump($minio_date);
         // die();
@@ -26,7 +26,7 @@ class Dashboard extends MY_Controller {
             $data = [
                 'title'         => 'Dashboard',
                 'description'   => '',
-                'content'       => 'dashboard/dashboard' //user adalah nama module, user_data nama file di view yang akan di load
+                'content'       => 'dashboard_pengajuan/dashboard_pengajuan' //user adalah nama module, user_data nama file di view yang akan di load
             ];
             $this->load->module('template');
             $this->template->index($data);
@@ -37,7 +37,7 @@ class Dashboard extends MY_Controller {
 
     public function list_data() 
     {
-        $list = $this->Dashboard_m->get_datatables();
+        $list = $this->Dashboard_pengajuan_m->get_datatables();
         $data = array();
         $no = @$_POST['start'];
         foreach ($list as $usr) {
@@ -74,8 +74,8 @@ class Dashboard extends MY_Controller {
         }
         $output = array(
                     "draw" => @$_POST['draw'],
-                    "recordsTotal" => $this->Dashboard_m->count_all(),
-                    "recordsFiltered" => $this->Dashboard_m->count_filtered(),
+                    "recordsTotal" => $this->Dashboard_pengajuan_m->count_all(),
+                    "recordsFiltered" => $this->Dashboard_pengajuan_m->count_filtered(),
                     "data" => $data,
                 );
         // output to json format
