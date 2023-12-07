@@ -23,7 +23,7 @@ class Laporan extends MY_Controller {
         $maintenance = $this->Maintenance_m->maintenance();
         if($maintenance != true){
             $jenis = $this->input->get('jenis');
-            $jenis == 'sangat_miskin' ? $desc = "Sangat Miskin" : ($jenis == 'hampir_miskin' ? $desc = 'Hampir Miskin' : ($jenis == 'miskin' ? $desc = 'Miskin' : $desc = 'Mampu'));
+            $jenis == 'PENDING' ? $desc = "PENDING" : ($jenis == 'REVIEW' ? $desc = 'REVIEW' : ($jenis == 'LAYAK' ? $desc = 'LAYAK' : $desc = 'TIDAK LAYAK'));
             $data = [
                 'title'         => 'Laporan',
                 'description'   => $desc,
@@ -57,42 +57,14 @@ class Laporan extends MY_Controller {
         $list = $this->Laporan_m->get_datatables($laporan);
         $data = array();
         $no = @$_POST['start'];
-        foreach ($list as $nik) {
+        foreach ($list as $usr) {
             $no++;
             $row = array();
             $row[] = $no.".";
-            $row[] = "";
-            $row[] = $nik->nomor_kk;
-            $row[] = $nik->nik;
-            $row[] = $nik->nama_lengkap;
-            $row[] = $nik->hubkel;
-            $row[] = $nik->tmpt_lahir;
-            $row[] = $nik->tgl_lahir;
-            $row[] = $nik->jenis_kelamin;
-            $row[] = $nik->status_kawin;
-            $row[] = $nik->alamat;
-            $row[] = $nik->rt;
-            $row[] = $nik->rw;
-            $row[] = $nik->kode_pos;
-            $row[] = $nik->kode_kecamatan;
-            $row[] = $nik->nama_kecamatan;
-            $row[] = $nik->kode_desa;
-            $row[] = $nik->nama_desa;
-            $row[] = $nik->nama_faskes;
-            $row[] = $nik->nama_faskes_dokter_gigi;
-            $row[] = $nik->nomor_telepon_peserta;
-            $row[] = $nik->email;
-            $row[] = $nik->npp;
-            $row[] = $nik->jabatan;
-            $row[] = $nik->status;
-            $row[] = $nik->kelas_rawat;
-            $row[] = $nik->tmt_kerja;
-            $row[] = $nik->gaji_pokok;
-            $row[] = $nik->kewarganegaraan;
-            $row[] = $nik->no_polis;
-            $row[] = $nik->nama_asuransi;
-            $row[] = $nik->no_npwp;
-            $row[] = $nik->no_passport;
+            $row[] = $usr->nama;
+            $row[] = $usr->nik;
+            $row[] = $usr->status;
+            $row[] = '<a data-id="'.$usr->nik.'" data-toggle="modal" class="open-editModal btn btn-info">Ubah Status</a>';
             $data[] = $row;
         }
         $output = array(
@@ -102,7 +74,25 @@ class Laporan extends MY_Controller {
                     "data" => $data,
                 );
         // output to json format
+        // var_dump($data);
         echo json_encode($output);
+    }
+
+    public function get_status($nik) {
+        $record = $this->Laporan_m->get_status($nik);
+        echo json_encode($record);
+    }
+
+    public function update_status() {
+        $nik = $this->input->post('nik');
+        $data = array(
+            // 'nik' => $this->input->post('nik'),
+            'status' => $this->input->post('status'),
+            // Add other fields as needed
+        );
+
+        $this->Laporan_m->update_status($nik, $data);
+        echo json_encode(array("status" => TRUE));
     }
 
     public function export(){

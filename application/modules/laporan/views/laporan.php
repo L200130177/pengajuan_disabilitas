@@ -8,59 +8,73 @@
 
 		<div class="pull-right">
 			<input type="hidden" id="jenis_laporan" value="<?=$jenis_laporan?>">
-			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#bulan">
+			<!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#bulan">
 				<i class="fa fa-file-excel-o"></i> Export Excel
 			</button>
-		</div>
+		</div> -->
 
 	</div>
 	<div class="box-body table-responsive">
 		<table class="table table-bordered table-striped" id="datatable">
-			<thead>
+		<thead>
 				<tr>
-					<th>#</th>
-					<th></th>
-					<th>Nomor Kartu Keluarga</th>
+					<th>No</th>
+					<th>Nama</th>
 					<th>NIK</th>
-					<th>Nama Lengkap</th>
-					<th>Hubungan Keluarga</th>
-					<th>Tempat Lahir</th>
-					<th>Tanggal Lahir</th>
-					<th>Jenis Kelamin</th>
-					<th>Status Kawin</th>
-					<th>Alamat Tempat Tinggal</th>
-					<th>RT</th>
-					<th>RW</th>
-					<th>Kode Pos</th>
-					<th>Kode Kecamatan</th>
-					<th>nama Kecamatan</th>
-					<th>Kode Desa</th>
-					<th>Nama Desa</th>
-					<th>Nama Faskes</th>
-					<th>Nama Faskes Dokter Gigi</th>
-					<th>Nomor Telepon Peserta</th>
-					<th>Email</th>
-					<th>Npp</th>
-					<th>Jabatan</th>
 					<th>Status</th>
-					<th>Kelas Rawat</th>
-					<th>TMT Kerja</th>
-					<th>Gaji Pokok + Tunjangan Tetap</th>
-					<th>Kewarganegaraan</th>
-					<th>No. Polis</th>
-					<th>Nama Asuransi</th>
-					<th>No. NPWP</th>
-					<th>No. Passport</th>
+					<th>Aksi</th>
 				</tr>
 			</thead>
 			<tbody>
-
 			</tbody>
+			<tfoot>
+				<tr>
+					<th>No</th>
+					<th>Nama</th>
+					<th>NIK</th>
+					<th>Status</th>
+					<th>Aksi</th>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 </div>
 
-<form action="<?=site_url('laporan/export')?>" method="post" name="form-laporan" id="form-laporan">
+<!-- The Edit Modal -->
+<div class="modal fade" id="editModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Record</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Your edit form goes here -->
+                    <form id="editForm">
+                        <input type="hidden" name="nik" id="editNik">
+                        <label for="editStatus">Status</label>
+                        <!-- <input type="text" id="editStatus" name="status" class="form-control" required> -->
+						<select name="status" id="editStatus" class="form-control"
+							data-rule-required="true"
+							data-msg-required="status belum dipilih, pilih salah satu">
+							<option value="PENDING">PENDING</option>
+							<option value="REVIEW">REVIEW</option>
+							<option value="LAYAK">LAYAK</option>
+							<option value="TIDAK LAYAK">TIDAK LAYAK</option>
+						</select></br>
+                </div>
+                <div class="modal-footer">
+					<button class="btn btn-success" type="submit"> Simpan&nbsp;</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"> Batal</button>
+                </div>
+				</form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <form action="<?=site_url('laporan/export')?>" method="post" name="form-laporan" id="form-laporan">
 	<div class="modal fade" id="bulan">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -87,21 +101,21 @@
 					</div>
 
 
-				</div>
+				</div> -->
 				<!-- /.input group -->
 
-				<div class="modal-footer">
+				<!-- <div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
 					<button type="submit" class="btn btn-success" data-toggle="modal" data-target="">
 						<i class="fa fa-file-excel-o"></i> Export Excel
 					</button>
 				</div>
-			</div>
+			</div> -->
 			<!-- /.modal-content -->
-		</div>
+		<!-- </div> -->
 		<!-- /.modal-dialog -->
-	</div>
-</form>
+	<!-- </div>
+</form> -->
 <!-- /.modal -->
 
 <!-- bootstrap datepicker -->
@@ -111,6 +125,7 @@
 <script>
 	$(document).ready(function () {
 		var jenis_laporan = $('#jenis_laporan').val();
+		// console.log(jenis_laporan);
 		$('#datatable').DataTable({
 			"processing": true,
 			"serverSide": true,
@@ -122,9 +137,7 @@
 				},
 			},
 			"columnDefs": [{
-					"targets": [0, 1, 5, 8, 9, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-						32
-					],
+					"targets": 0,
 					"orderable": false
 				}
 
@@ -149,5 +162,56 @@
 	$("#form-laporan").validate({
 		onkeyup: false,
 	})
+
+	$(document).ready(function () {
+        // Open the edit modal when the edit button is clicked
+        $(document).on('click', ".open-editModal",function() {
+            var nik = $(this).data('id');
+			console.log(nik); 
+            $.ajax({
+                url: "<?php echo base_url('laporan/get_status/'); ?>" + nik,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // Populate the edit form with data
+                    $("#editNik").val(data.nik);
+                    // $("#editStatus").val(data.status);
+					$("#editStatus option").each(function () {
+                    if ($(this).val() == data.status) {
+                        $(this).prop("selected", true);
+                    	}
+					});
+                    // Open the edit modal
+                    $("#editModal").modal();
+                },
+                error: function () {
+                    alert('Error loading data');
+                }
+            });
+        });
+
+        // Handle edit form submission
+        $("#editForm").submit(function (e) {
+            e.preventDefault();
+
+            // Perform AJAX submission
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('laporan/update_status'); ?>",
+                data: $("#editForm").serialize(),
+                dataType: "json",
+                success: function (response) {
+                    // Handle the response
+                    alert("Data Berhasil Diubah");
+                    // You can close the edit modal if needed
+                    $("#editModal").modal("hide");
+					location.reload();
+                },
+                error: function () {
+                    alert("Error updating record");
+                }
+            });
+        });
+    });
 
 </script>
