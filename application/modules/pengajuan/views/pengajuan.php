@@ -49,10 +49,10 @@
 					</div>
 
 					<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-						<!-- <ul class="nav navbar-nav">
-							<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-							<li><a href="#">Link</a></li>
-							<li class="dropdown">
+						<ul class="nav navbar-nav">
+							<!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->
+							<li><a href="#" data-toggle="modal" data-target="#ceknikModal">Cek NIK anda disini</a></li>
+							<!-- <li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span
 										class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
@@ -64,14 +64,15 @@
 									<li class="divider"></li>
 									<li><a href="#">One more separated link</a></li>
 								</ul>
-							</li>
-						</ul> -->
-						<form method="post" action="<?=base_url('pengajuan/search');?>" class="navbar-form navbar-left" role="search">
+							</li> -->
+						</ul>
+						<!-- <form method="post" action="<?=base_url('pengajuan/search');?>" class="navbar-form navbar-left" role="search">
 							<div class="form-group">
 							<input type="text" class="form-control form-control-user" id="search_nik"
 												name="search_nik" placeholder="Cek NIK" minlength="3" maxlength="18">
+							<button type="submit" class="btn btn-warning btn-block btn-flat" data-toggle="modal" data-target="#ceknikModal">Cek NIK anda</button>
 							</div>
-						</form>
+						</form> -->
 					</div>
 
 					<div class="navbar-custom-menu">
@@ -512,6 +513,38 @@
 	</div>
 	<!-- ./wrapper -->
 
+	<!-- EDIT MODAL -->
+	<div class="modal fade" id="ceknikModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Cek NIK</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>Masukkan NIK anda</label>
+								<input type="text" class="form-control form-control-user" id="cek_nik" name="cek_nik" placeholder="Masukkan NIK" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+								<p>
+								<span  id="cek_nik_response" style="padding-top:50px;"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+					<button type="button" id="cek_nik_btn" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
 	<!-- jQuery 3 -->
 	<script src="<?=base_url();?>assets/bower_components/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap 3.3.7 -->
@@ -594,6 +627,168 @@
 			$("#form-pengajuan").validate({
 				onkeyup: false,
 			})
+
+			$("#kartu_keluarga").on('change', function () {
+				var countFiles = $(this)[0].files.length;
+				var imgPath = $(this)[0].value;
+				var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+				var image_holder = $("#image-holder_one");
+				image_holder.empty();
+					if (extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "docx" || extn == "pdf") {
+							console.log(this.files[0].type);
+							if(this.files[0].size > 2200000){
+							alert("File tidak boleh lebih dari 2mb!");
+							this.value = "";
+							};
+					} else {
+						alert("File Format tidak mendukung. Format yang didukung hanya jpg, jpeg, png, docx  & pdf");
+						this.value = "";
+					}
+			});
+			$("#ktp").on('change', function () {
+				var countFiles = $(this)[0].files.length;
+				var imgPath = $(this)[0].value;
+				var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+				var image_holder = $("#image-holder_one");
+				image_holder.empty();
+					if (extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "docx" || extn == "pdf") {
+							console.log(this.files[0].type);
+							if(this.files[0].size > 2200000){
+							alert("File tidak boleh lebih dari 2mb!");
+							this.value = "";
+							};
+					} else {
+						alert("File Format tidak mendukung. Format yang didukung hanya jpg, jpeg, png, docx  & pdf");
+						this.value = "";
+					}
+			});
+			$("#pas_foto").on('change', function () {
+				var countFiles = $(this)[0].files.length;
+				var imgPath = $(this)[0].value;
+				var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+				var image_holder = $("#image-holder_one");
+				image_holder.empty();
+					if (extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "docx" || extn == "pdf") {
+							console.log(this.files[0].type);
+							if(this.files[0].size > 2200000){
+							alert("File tidak boleh lebih dari 2mb!");
+							this.value = "";
+							};
+					} else {
+						alert("File Format tidak mendukung. Format yang didukung hanya jpg, jpeg, png, docx  & pdf");
+						this.value = "";
+					}
+			});
+			$("#sktm").on('change', function () {
+				var countFiles = $(this)[0].files.length;
+				var imgPath = $(this)[0].value;
+				var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+				var image_holder = $("#image-holder_one");
+				image_holder.empty();
+					if (extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "docx" || extn == "pdf") {
+							console.log(this.files[0].type);
+							if(this.files[0].size > 2200000){
+							alert("File tidak boleh lebih dari 2mb!");
+							this.value = "";
+							};
+					} else {
+						alert("File Format tidak mendukung. Format yang didukung hanya jpg, jpeg, png, docx  & pdf");
+						this.value = "";
+					}
+			});
+			$("#ijazah").on('change', function () {
+				var countFiles = $(this)[0].files.length;
+				var imgPath = $(this)[0].value;
+				var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+				var image_holder = $("#image-holder_one");
+				image_holder.empty();
+					if (extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "docx" || extn == "pdf") {
+							console.log(this.files[0].type);
+							if(this.files[0].size > 2200000){
+							alert("File tidak boleh lebih dari 2mb!");
+							this.value = "";
+							};
+					} else {
+						alert("File Format tidak mendukung. Format yang didukung hanya jpg, jpeg, png, docx  & pdf");
+						this.value = "";
+					}
+			});
+			$("#sertifikat_keahlian").on('change', function () {
+				var countFiles = $(this)[0].files.length;
+				var imgPath = $(this)[0].value;
+				var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+				var image_holder = $("#image-holder_one");
+				image_holder.empty();
+					if (extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "docx" || extn == "pdf") {
+							console.log(this.files[0].type);
+							if(this.files[0].size > 2200000){
+							alert("File tidak boleh lebih dari 2mb!");
+							this.value = "";
+							};
+					} else {
+						alert("File Format tidak mendukung. Format yang didukung hanya jpg, jpeg, png, docx  & pdf");
+						this.value = "";
+					}
+			});
+			$("#domisili").on('change', function () {
+				var countFiles = $(this)[0].files.length;
+				var imgPath = $(this)[0].value;
+				var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+				var image_holder = $("#image-holder_one");
+				image_holder.empty();
+					if (extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "docx" || extn == "pdf") {
+							console.log(this.files[0].type);
+							if(this.files[0].size > 2200000){
+							alert("File tidak boleh lebih dari 2mb!");
+							this.value = "";
+							};
+					} else {
+						alert("File Format tidak mendukung. Format yang didukung hanya jpg, jpeg, png, docx  & pdf");
+						this.value = "";
+					}
+			});
+			$("#foto_usaha").on('change', function () {
+				var countFiles = $(this)[0].files.length;
+				var imgPath = $(this)[0].value;
+				var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+				var image_holder = $("#image-holder_one");
+				image_holder.empty();
+					if (extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "docx" || extn == "pdf") {
+							console.log(this.files[0].type);
+							if(this.files[0].size > 2200000){
+							alert("File tidak boleh lebih dari 2mb!");
+							this.value = "";
+							};
+					} else {
+						alert("File Format tidak mendukung. Format yang didukung hanya jpg, jpeg, png, docx  & pdf");
+						this.value = "";
+					}
+			});
+
+			$('#cek_nik_btn').click(function(){
+				$.ajax({
+				url: '<?=base_url();?>pengajuan/search',
+				type: 'POST',
+				timeout: 10000,
+				dataType: 'json',
+				data: {cek_nik:$('#cek_nik').val()},
+				success: function(data) {
+					console.log(data);
+					$('#cek_nik_response').html(data.message);
+				},
+				error: function(request, status, err) {
+						if (status == "timeout") {
+							alert("Timeout backend.");
+							// timeout -> reload the page and try again
+							// clearInterval(ajax_call);
+							//  window.location.reload(); //make it comment if you don't want to reload page
+						} else {
+							// another error occured  
+							alert("error: " + request + status + err);
+						}
+					}
+				});
+			});
 		})
 
 	</script>

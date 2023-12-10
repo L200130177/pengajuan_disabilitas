@@ -55,6 +55,7 @@ input[type=number] {
                   <label for="exampleInputFile">File input</label>
                   <input type="text" id="nama_lengkap" name="nama_lengkap">
                   <input type="file" id="ref_file1" name="ref_file1">
+				  <div id="image-holder_one" class="image-holder"></div>
 				  <input type="file" id="ref_file2" name="ref_file2">
                   <p class="help-block">Example block-level help text here.</p>
                 </div>
@@ -142,4 +143,50 @@ input[type=number] {
 	$("#form-nik-ppks").validate({
 		onkeyup: false,
 	})
+
+	var uploadFieldSize = document.getElementById("ref_file2");
+
+	uploadFieldSize.onchange = function() {
+		console.log(this.files[0].type);
+		if(this.files[0].size > 2200000){
+		alert("File tidak boleh lebih dari 2mb!");
+		this.value = "";
+		};
+	};
+
+	var fileType = document.getElementById('ref_file2');
+
+	fileType.onchange = function(e) {
+	var ext = this.value.match(/\.([^\.]+)$/)[1];
+	switch (ext) {
+		case 'jpg':
+		case 'jpeg':
+		case 'png':
+		alert('Diperbolehkan');
+		break;
+		default:
+		alert('Tidak DIperbolehkan');
+		this.value = '';
+	}
+	};
+
+
+	$("#ref_file1").on('change', function () {
+		var countFiles = $(this)[0].files.length;
+		var imgPath = $(this)[0].value;
+		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+		var image_holder = $("#image-holder_one");
+		image_holder.empty();
+			if (extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "docx" || extn == "pdf") {
+					console.log(this.files[0].type);
+					if(this.files[0].size > 2200000){
+					alert("File tidak boleh lebih dari 2mb!");
+					this.value = "";
+					};
+			} else {
+				alert("File Format tidak mendukung. Format yang didukung hanya jpg, jpeg, png, docx  & pdf");
+				this.value = "";
+			}
+	});
+
 </script>

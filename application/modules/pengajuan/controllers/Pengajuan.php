@@ -42,12 +42,7 @@ class Pengajuan extends MY_Controller {
             'file_domisili_tmp'             => $_FILES['domisili']['tmp_name'],
             'file_foto_usaha_tmp'           => $_FILES['foto_usaha']['tmp_name'],
         );
-        // if($data_minio['file_foto_usaha_tmp'] != ""){
-        //     echo "file ada";
-        // }else{
-        //     echo "file tidak ada";
-        // }
-        // die();
+
         $data = array(
             'nama' 	                        => htmlentities($this->input->post('nama')),
             'nik'                           => htmlentities($this->input->post('nik')),
@@ -84,24 +79,21 @@ class Pengajuan extends MY_Controller {
             );
         
         $check_nik = $this->db->get_where('pengajuan_disabilitas', array('nik' => $this->input->post('nik')))->row_array();
-        // var_dump($check_nik);
-        // die();
 
         if(isset($check_nik['nik']) != $this->input->post('nik')){
-            $insert = $this->db->insert('pengajuan_disabilitas',$data);
-            if($this->db->affected_rows()>0){
-                $s3client = new Aws\S3\S3Client([
-                    'region' => 'us-west-2', 
-                    'version' => 'latest',
-                    'endpoint' => getenv('MINIO_ENDPOINT'),
-                    'useSSL' => false,
-                    'use_path_style_endpoint' => true,
-                    'credentials' => [
-                        'key'    => getenv('MINIO_ACCESS_KEY'),
-                        'secret' => getenv('MINIO_SECRET_KEY'),
-                ],
-                ]);
-                    if(htmlentities($this->input->post('jenis_layanan')) == 'bimbingan pelatihan ketrampilan') {
+            $s3client = new Aws\S3\S3Client([
+                'region' => 'us-west-2', 
+                'version' => 'latest',
+                'endpoint' => getenv('MINIO_ENDPOINT'),
+                'useSSL' => false,
+                'use_path_style_endpoint' => true,
+                'credentials' => [
+                    'key'    => getenv('MINIO_ACCESS_KEY'),
+                    'secret' => getenv('MINIO_SECRET_KEY'),
+            ],
+            ]);
+                if(htmlentities($this->input->post('jenis_layanan')) == 'bimbingan pelatihan ketrampilan') {
+                    try {
                         $s3client->putObject([
                             'Bucket' => $bucket_name,
                             'Key' => $data_minio['date'] . "/" . $data_minio['inputor'] . "/" . $data_minio['file_kk'],
@@ -128,7 +120,15 @@ class Pengajuan extends MY_Controller {
                             'SourceFile' => $data_minio['file_ijazah_tmp']
                         ]);
                         echo "Uploaded to $bucket_name.\n";
-                    } elseif(htmlentities($this->input->post('jenis_layanan')) == 'permohonan bursa kerja'){
+                        $insert = $this->db->insert('pengajuan_disabilitas',$data);
+                    } catch (Exception $exception) {
+                        $this->db->set('error_message', $exception->getMessage());
+                        $insert = $this->db->insert('log_error',$data);
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-check"></i>Data gagal ditambahkan, silakan coba beberapa saat lagi</div>');
+                        redirect('pengajuan');
+                    }
+                } elseif(htmlentities($this->input->post('jenis_layanan')) == 'permohonan bursa kerja'){
+                    try{
                         $s3client->putObject([
                             'Bucket' => $bucket_name,
                             'Key' => $data_minio['date'] . "/" . $data_minio['inputor'] . "/" . $data_minio['file_kk'],
@@ -165,7 +165,15 @@ class Pengajuan extends MY_Controller {
                             'SourceFile' => $data_minio['file_domisili_tmp']
                         ]);
                         echo "Uploaded to $bucket_name.\n";
-                    } elseif(htmlentities($this->input->post('jenis_layanan')) == 'permohonan bantuan modal usaha'){
+                        $insert = $this->db->insert('pengajuan_disabilitas',$data);
+                    } catch (Exception $exception) {
+                        $this->db->set('error_message', $exception->getMessage());
+                        $insert = $this->db->insert('log_error',$data);
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-check"></i>Data gagal ditambahkan, silakan coba beberapa saat lagi</div>');
+                        redirect('pengajuan');
+                    }
+                } elseif(htmlentities($this->input->post('jenis_layanan')) == 'permohonan bantuan modal usaha'){
+                    try {
                         $s3client->putObject([
                             'Bucket' => $bucket_name,
                             'Key' => $data_minio['date'] . "/" . $data_minio['inputor'] . "/" . $data_minio['file_kk'],
@@ -197,7 +205,15 @@ class Pengajuan extends MY_Controller {
                             'SourceFile' => $data_minio['file_foto_usaha_tmp']
                         ]);
                         echo "Uploaded to $bucket_name.\n";
-                    }else{
+                        $insert = $this->db->insert('pengajuan_disabilitas',$data);
+                    } catch (Exception $exception) {
+                        $this->db->set('error_message', $exception->getMessage());
+                        $insert = $this->db->insert('log_error',$data);
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-check"></i>Data gagal ditambahkan, silakan coba beberapa saat lagi</div>');
+                        redirect('pengajuan');
+                    }
+                }else{
+                    try {
                         $s3client->putObject([
                             'Bucket' => $bucket_name,
                             'Key' => $data_minio['date'] . "/" . $data_minio['inputor'] . "/" . $data_minio['file_kk'],
@@ -219,10 +235,16 @@ class Pengajuan extends MY_Controller {
                             'SourceFile' => $data_minio['file_sktm_tmp']
                         ]);
                         echo "Uploaded to $bucket_name.\n";
+                        $insert = $this->db->insert('pengajuan_disabilitas',$data);
+                    } catch (Exception $exception) {
+                        $this->db->set('error_message', $exception->getMessage());
+                        $insert = $this->db->insert('log_error',$data);
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-check"></i>Data gagal ditambahkan, silakan coba beberapa saat lagi</div>');
+                        redirect('pengajuan');
                     }
-                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-check"></i>Data berhasil ditambahkan</div>');
-                redirect('pengajuan');
-            }
+                }
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-check"></i>Data berhasil ditambahkan</div>');
+            redirect('pengajuan');
         }else{
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><i class="icon fa fa-ban"></i>NIK sudah terdaftar</div>');
             redirect('pengajuan');
@@ -231,15 +253,12 @@ class Pengajuan extends MY_Controller {
 
     public function search()
     {
-        $check_nik = $this->db->get_where('pengajuan_disabilitas', array('nik' => $this->input->post('search_nik')))->row_array();
-        if(isset($check_nik) != $this->input->post('search_nik')){
-            echo "nik tidak terdaftar";
-            // var_dump($check_nik);
-            // die();
+        $data = $this->input->post();
+        $check_nik = $this->db->get_where('pengajuan_disabilitas', array('nik' => $this->input->post('cek_nik')))->row_array();
+        if(isset($check_nik) != $this->input->post('cek_nik')){
+            echo json_encode(array('message'=>'<font color="red">NIK <b>'.$this->input->post('cek_nik').'</b> tidak terdaftar</font>'));
         }else{
-            echo "nik ada";
-            // var_dump($check_nik);
-            // die();
+            echo json_encode(array('message'=>'<font color="green">NIK <b>'.$this->input->post('cek_nik').'</b> sudah terdaftar dengan status '.$check_nik['status'].'</font>'));
         }
     }
 

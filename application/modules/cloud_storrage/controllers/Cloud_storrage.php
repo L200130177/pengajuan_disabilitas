@@ -69,10 +69,23 @@ class Cloud_storrage extends MY_Controller {
             'file_tmp1'   => $_FILES['ref_file1']['tmp_name'],
             'file_tmp2'   => $_FILES['ref_file2']['tmp_name'],
         );
-        var_dump($data);
-        die();
+        // var_dump($data);
+        // die();
         // $this->Cloud_storrage_m->add($data);
         // if($this->db->affected_rows()>0){
+            if($a == 1){
+                try {
+                    $s3client->putObject([
+                        'Bucket' => $bucket_name,
+                        'Key' => $data['date'] . "/" . $data['inputor'] . "/" . $data['file_name1'],
+                        'SourceFile' => $data['file_tmp1']
+                    ]);
+                    echo "Uploaded to $bucket_name.\n";
+                } catch (Exception $exception) {
+                    echo "Failed to upload with error: " . $exception->getMessage();
+                    exit("Please fix error with file upload before continuing.");
+                }
+            }
             try {
                 $s3client->putObject([
                     'Bucket' => $bucket_name,
@@ -85,17 +98,17 @@ class Cloud_storrage extends MY_Controller {
                 exit("Please fix error with file upload before continuing.");
             }
     
-            try {
-                $s3client->putObject([
-                    'Bucket' => $bucket_name,
-                    'Key' => $data['date'] . "/" . $data['inputor'] . "/" . $data['file_name2'],
-                    'SourceFile' => $data['file_tmp2']
-                ]);
-                echo "Uploaded to $bucket_name.\n";
-            } catch (Exception $exception) {
-                echo "Failed to upload with error: " . $exception->getMessage();
-                exit("Please fix error with file upload before continuing.");
-            }
+            // try {
+            //     $s3client->putObject([
+            //         'Bucket' => $bucket_name,
+            //         'Key' => $data['date'] . "/" . $data['inputor'] . "/" . $data['file_name2'],
+            //         'SourceFile' => $data['file_tmp2']
+            //     ]);
+            //     echo "Uploaded to $bucket_name.\n";
+            // } catch (Exception $exception) {
+            //     echo "Failed to upload with error: " . $exception->getMessage();
+            //     exit("Please fix error with file upload before continuing.");
+            // }
         // }
         // var_dump($data);
         // die();
