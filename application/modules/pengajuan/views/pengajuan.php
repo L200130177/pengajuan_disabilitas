@@ -766,6 +766,7 @@
 			});
 
 			$('#cek_nik_btn').click(function(){
+				$('#cek_nik_response').text('Loading...');
 				$.ajax({
 				url: '<?=base_url();?>pengajuan/search',
 				type: 'POST',
