@@ -51,7 +51,7 @@
 					<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
 						<ul class="nav navbar-nav">
 							<!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->
-							<li><a href="#" data-toggle="modal" data-target="#ceknikModal">Cek NIK anda disini</a></li>
+							
 							<!-- <li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span
 										class="caret"></span></a>
@@ -103,6 +103,7 @@
 						Pengajuan Bantuan
 						<small>Dinas Sosial</small>
 					</h1>
+					<li><a href="#" data-toggle="modal" class="btn btn-success" data-target="#ceknikModal">Cek Status Ajuan</a></li>
 					<?= $this->session->flashdata('message');?>
 				</section>
 
@@ -111,9 +112,11 @@
 
 					<form method="post" id="form-pengajuan" name="form-pengajuan"
 						action="<?=site_url('pengajuan/submit')?>" enctype="multipart/form-data">
+					<div class="row">
+					<div class="col-md-6">
 						<div class="box box-default">
 							<div class="box-header with-border">
-								<h3 class="box-title">Identitas Penerima Manfaat</h3>
+								<h3 class="box-title"><strong>Identitas Penerima Manfaat</strong></h3>
 
 								<!-- <div class="box-tools pull-right">
 								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -300,10 +303,14 @@
 								</div>
 							</div>
 						</div>
+						<!-- </div> -->
+						</div>	
 
+						<!-- <div class="row"> -->
+					<div class="col-md-6">
 						<div class="box box-default">
 							<div class="box-header with-border">
-								<h3 class="box-title">Identitas Keluarga (Orang tua / Wali)</h3>
+								<h3 class="box-title"><strong>Identitas Keluarga (Orang tua / Wali)</strong></h3>
 
 								<!-- <div class="box-tools pull-right">
 								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -402,10 +409,12 @@
 								</div>
 							</div>
 						</div>
+					</div>
 
+						<div class="col-md-6">
 						<div class="box box-default">
 							<div class="box-header with-border">
-								<h3 class="box-title">Jenis Layanan</h3>
+								<h3 class="box-title"><strong>Jenis Layanan</strong></h3>
 
 								<!-- <div class="box-tools pull-right">
 								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -490,6 +499,8 @@
 							</div>
 						</div>
 						<button type="submit" class="btn btn-primary btn-block btn-flat">Simpan Data</button>
+						</div>
+						</div>
 
 					</form>
 
@@ -520,14 +531,14 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Cek NIK</h4>
+					<h4 class="modal-title">Cek Status Ajuan</h4>
 				</div>
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
 								<label>Masukkan NIK anda</label>
-								<input type="text" class="form-control form-control-user" id="cek_nik" name="cek_nik" placeholder="Masukkan NIK" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter">
+								<input type="text" class="form-control form-control-user" id="cek_nik" name="cek_nik" placeholder="Masukkan NIK" data-rule-required="true" data-rule-minlength="4" data-rule-maxlength="20" data-msg-required="Username masih kosong, silakan isi" data-msg-minlength="Username minimal 4 karakter" data-msg-maxlength="Username maksimal 20 karakter" required>
 								<p>
 								<span  id="cek_nik_response" style="padding-top:50px;"></span>
 							</div>
@@ -536,7 +547,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-					<button type="button" id="cek_nik_btn" class="btn btn-primary">Save changes</button>
+					<button type="button" id="cek_nik_btn" class="btn btn-primary">Cek Ajuan</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
