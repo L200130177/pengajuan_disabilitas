@@ -32,7 +32,7 @@
 	<!-- Automatic element centering -->
 	<div class="lockscreen-wrapper">
 		<div class="lockscreen-logo">
-			<a href="<?=base_url();?>assets/index2.html"><b>Dinas</b>Sosial</a>
+			<a href="<?=base_url();?>assets/landing"><b>Dinas</b>Sosial</a>
 		</div>
 		<!-- User name -->
 		<div class="lockscreen-name">Validasi</div>
@@ -41,7 +41,7 @@
 		<div class="lockscreen-item">
 			<!-- lockscreen image -->
 			<div class="lockscreen-image">
-				<img src="<?=base_url();?>assets/dist/img/user1-128x128.jpg" alt="User Image">
+				<img src="<?=base_url();?>assets/dist/img/kra.png" alt="User Image">
 			</div>
 			<!-- /.lockscreen-image -->
 
