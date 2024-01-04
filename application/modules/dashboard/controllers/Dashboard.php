@@ -50,6 +50,11 @@ class Dashboard extends MY_Controller {
             $row[] = $no.".";
             $row[] = $usr->nama;
             $row[] = $usr->nik;
+            $row[] = $usr->umur;
+            $row[] = $usr->jenis_kelamin;
+            $row[] = $usr->alamat_lengkap;
+            $row[] = $usr->jenis_kedisabilitasan;
+            $row[] = $usr->jenis_layanan;
             $row[] = $usr->status;
             // $row[] = '<img src="'.$ref_file.$usr->ref_file.'" class="user-image" alt="User Image" style="width: 200px;height:100px;">';
             $row[] = '<form method="post" action="dashboard/download_folder" enctype="multipart/form-data">

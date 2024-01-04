@@ -21,6 +21,11 @@
 					<th>No</th>
 					<th>Nama</th>
 					<th>NIK</th>
+					<th>Umur</th>
+					<th>Jenis Kelamin</th>
+					<th>Alamat</th>
+					<th>Jenis Disabilitas</th>
+					<th>Jenis Layanan</th>
 					<th>Status</th>
 					<th>Aksi</th>
 				</tr>
@@ -32,6 +37,11 @@
 					<th>No</th>
 					<th>Nama</th>
 					<th>NIK</th>
+					<th>Umur</th>
+					<th>Jenis Kelamin</th>
+					<th>Alamat</th>
+					<th>Jenis Disabilitas</th>
+					<th>Jenis Layanan</th>
 					<th>Status</th>
 					<th>Aksi</th>
 				</tr>
