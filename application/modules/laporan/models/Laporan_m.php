@@ -9,7 +9,7 @@ class Laporan_m extends CI_Model{
  
     private function _get_datatables_query() {
       
-        $this->db->select('id_pengajuan, nama, nik, status, created_at');
+        $this->db->select('*');
         $this->db->from('pengajuan_disabilitas');
 
         $i = 0;

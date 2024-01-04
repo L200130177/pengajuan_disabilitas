@@ -63,6 +63,11 @@ class Laporan extends MY_Controller {
             $row[] = $no.".";
             $row[] = $usr->nama;
             $row[] = $usr->nik;
+            $row[] = $usr->umur;
+            $row[] = $usr->jenis_kelamin;
+            $row[] = $usr->alamat_lengkap;
+            $row[] = $usr->jenis_kedisabilitasan;
+            $row[] = $usr->jenis_layanan;
             $row[] = $usr->status;
             $row[] = '<a data-id="'.$usr->nik.'" data-toggle="modal" class="open-editModal btn btn-info">Ubah Status</a>';
             $data[] = $row;
